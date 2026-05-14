@@ -1,0 +1,61 @@
+[19-Mar-2026 15:42:48 UTC] Error de evento de reprogramación de cron para el gancho: wp_privacy_delete_old_export_files. Código de error: could_not_set. Mensaje de error: No se ha podido guardar la lista de eventos del cron.. Datos: {"schedule":"hourly","args":[],"interval":3600}
+[20-Mar-2026 15:32:12 UTC] Error de evento de reprogramación de cron para el gancho: wordfence_ls_ntp_cron. Código de error: could_not_set. Mensaje de error: No se ha podido guardar la lista de eventos del cron.. Datos: {"schedule":"hourly","args":[],"interval":3600}
+[05-Apr-2026 16:31:39 UTC] Error de evento de reprogramación de cron para el gancho: wp_scheduled_delete. Código de error: could_not_set. Mensaje de error: No se ha podido guardar la lista de eventos del cron.. Datos: {"schedule":"daily","args":[],"interval":86400}
+[10-Apr-2026 00:10:47 UTC] Error de evento de reprogramación de cron para el gancho: wordfence_ls_ntp_cron. Código de error: could_not_set. Mensaje de error: No se ha podido guardar la lista de eventos del cron.. Datos: {"schedule":"hourly","args":[],"interval":3600}
+[17-Apr-2026 13:10:09 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "ABSPATH" in /home/ag/public_html/grupoag/wp-settings.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/ag/public_html/grupoag/wp-settings.php on line 34
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('wp_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, wfLog->actionSetRequestJSEnabled, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('wp_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, wfLog->actionSetRequestJSEnabled, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), do_action('template_redirect'), WP_Hook->do_action, WP_Hook->apply_filters, wordfence::templateRedir, wordfence::doEarlyAccessLogging, wfLog->logLeechAndBlock, wfRateLimit::mightRateLimit, wfRateLimit::visitorType, wfCrawl::isCrawler, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), do_action('template_redirect'), WP_Hook->do_action, WP_Hook->apply_filters, wordfence::templateRedir, wordfence::doEarlyAccessLogging, wfLog->logLeechAndBlock, wfRateLimit::mightRateLimit, wfRateLimit::visitorType, wfCrawl::isCrawler, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('wp_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, wfLog->actionSetRequestJSEnabled, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('wp_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, wfLog->actionSetRequestJSEnabled, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), do_action('template_redirect'), WP_Hook->do_action, WP_Hook->apply_filters, wordfence::templateRedir, wordfence::doEarlyAccessLogging, wfLog->logLeechAndBlock, wfRateLimit::mightRateLimit, wfRateLimit::visitorType, wfCrawl::isCrawler, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing 'information_schema.(temporary)' (Errcode: 28 "No space left on device") for query SHOW FULL COLUMNS FROM `wpro_wflivetraffichuman` made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), do_action('template_redirect'), WP_Hook->do_action, WP_Hook->apply_filters, wordfence::templateRedir, wordfence::doEarlyAccessLogging, wfLog->logLeechAndBlock, wfRateLimit::mightRateLimit, wfRateLimit::visitorType, wfCrawl::isCrawler, wfLog::isHumanRequest
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing '.(temporary)' (Errcode: 28 "No space left on device") for query SELECT   wpro_posts.*
+					 FROM wpro_posts  INNER JOIN wpro_postmeta ON ( wpro_posts.ID = wpro_postmeta.post_id )  INNER JOIN wpro_postmeta AS mt1 ON ( wpro_posts.ID = mt1.post_id )
+					 WHERE 1=1  AND ( 
+  wpro_postmeta.meta_key = '_elementor_priority' 
+  AND 
+  ( 
+    ( mt1.meta_key = '_elementor_location' AND mt1.meta_value = 'elementor_head' )
+  )
+) AND wpro_posts.post_type = 'elementor_snippet' AND ((wpro_posts.post_status = 'publish'))
+					 GROUP BY wpro_posts.ID
+					 ORDER BY wpro_postmeta.meta_value+0 ASC
+					  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/generatepress/404.php'), get_header, locate_template, load_template, require_once('/themes/generatepress/header.php'), wp_head, do_action('wp_head'), WP_Hook->do_action, WP_Hook->apply_filters, ElementorPro\Modules\CustomCode\Module->ElementorPro\Modules\CustomCode\{closure}, ElementorPro\Modules\CustomCode\Module->print_snippets, ElementorPro\Modules\CustomCode\Module->get_snippets_by_location, get_posts, WP_Query->query, WP_Query->get_posts
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing '.(temporary)' (Errcode: 28 "No space left on device") for query SELECT   wpro_posts.*
+					 FROM wpro_posts  INNER JOIN wpro_postmeta ON ( wpro_posts.ID = wpro_postmeta.post_id )  INNER JOIN wpro_postmeta AS mt1 ON ( wpro_posts.ID = mt1.post_id )
+					 WHERE 1=1  AND ( 
+  wpro_postmeta.meta_key = '_elementor_priority' 
+  AND 
+  ( 
+    ( mt1.meta_key = '_elementor_location' AND mt1.meta_value = 'elementor_body_start' )
+  )
+) AND wpro_posts.post_type = 'elementor_snippet' AND ((wpro_posts.post_status = 'publish'))
+					 GROUP BY wpro_posts.ID
+					 ORDER BY wpro_postmeta.meta_value+0 ASC
+					  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/generatepress/404.php'), get_header, locate_template, load_template, require_once('/themes/generatepress/header.php'), do_action('wp_body_open'), WP_Hook->do_action, WP_Hook->apply_filters, ElementorPro\Modules\CustomCode\Module->ElementorPro\Modules\CustomCode\{closure}, ElementorPro\Modules\CustomCode\Module->print_snippets, ElementorPro\Modules\CustomCode\Module->get_snippets_by_location, get_posts, WP_Query->query, WP_Query->get_posts
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing '.(temporary)' (Errcode: 28 "No space left on device") for query SELECT   wpro_posts.*
+					 FROM wpro_posts  LEFT JOIN wpro_term_relationships ON (wpro_posts.ID = wpro_term_relationships.object_id)
+					 WHERE 1=1  AND ( 
+  wpro_term_relationships.term_taxonomy_id IN (3)
+) AND wpro_posts.post_type = 'nav_menu_item' AND ((wpro_posts.post_status = 'publish'))
+					 GROUP BY wpro_posts.ID
+					 ORDER BY wpro_posts.menu_order ASC
+					  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/generatepress/404.php'), get_header, locate_template, load_template, require_once('/themes/generatepress/header.php'), do_action('generate_header'), WP_Hook->do_action, WP_Hook->apply_filters, ElementorPro\Modules\ThemeBuilder\ThemeSupport\GeneratePress_Theme_Support->do_header, ElementorPro\Modules\ThemeBuilder\Classes\Locations_Manager->do_location, ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document->print_content, ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document->get_content, Elementor\Modules\Library\Documents\Library_Document->get_content, Elementor\Core\Base\Document->get_content, Elementor\Frontend->get_builder_content, ElementorPro\Modules\ThemeBuilder\Documents\Theme_Document->print_elements_with_wrapper, Elementor\Core\Base\Document->print_elements, Elementor\Element_Base->print_element, Elementor\Element_Base->print_content, Elementor\Element_Base->print_element, Elementor\Element_Base->print_content, Elementor\Element_Base->print_element, Elementor\Element_Base->print_content, Elementor\Element_Base->print_element, Elementor\Element_Base->print_content, Elementor\Element_Base->print_element, Elementor\Widget_Base->print_content, Elementor\Widget_Base->render_content, Elementor\Controls_Stack->render_by_mode, ElementorPro\Modules\NavMenu\Widgets\Nav_Menu->render, wp_nav_menu, wp_get_nav_menu_items, get_posts, WP_Query->query, WP_Query->get_posts
+[17-Apr-2026 21:16:38 UTC] WordPress database error Disk got full writing '.(temporary)' (Errcode: 28 "No space left on device") for query SELECT   wpro_posts.*
+					 FROM wpro_posts  INNER JOIN wpro_postmeta ON ( wpro_posts.ID = wpro_postmeta.post_id )  INNER JOIN wpro_postmeta AS mt1 ON ( wpro_posts.ID = mt1.post_id )
+					 WHERE 1=1  AND ( 
+  wpro_postmeta.meta_key = '_elementor_priority' 
+  AND 
+  ( 
+    ( mt1.meta_key = '_elementor_location' AND mt1.meta_value = 'elementor_body_end' )
+  )
+) AND wpro_posts.post_type = 'elementor_snippet' AND ((wpro_posts.post_status = 'publish'))
+					 GROUP BY wpro_posts.ID
+					 ORDER BY wpro_postmeta.meta_value+0 ASC
+					  made by require('wp-blog-header.php'), require_once('wp-includes/template-loader.php'), include('/themes/generatepress/404.php'), get_footer, locate_template, load_template, require_once('/themes/generatepress/footer.php'), wp_footer, do_action('wp_footer'), WP_Hook->do_action, WP_Hook->apply_filters, ElementorPro\Modules\CustomCode\Module->ElementorPro\Modules\CustomCode\{closure}, ElementorPro\Modules\CustomCode\Module->print_snippets, ElementorPro\Modules\CustomCode\Module->get_snippets_by_location, get_posts, WP_Query->query, WP_Query->get_posts
+[06-May-2026 12:50:46 UTC] Error de evento de reprogramación de cron para el gancho: wordfence_hourly_cron. Código de error: could_not_set. Mensaje de error: No se ha podido guardar la lista de eventos del cron.. Datos: {"schedule":"hourly","args":[],"interval":3600}

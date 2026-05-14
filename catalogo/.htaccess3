@@ -1,0 +1,5 @@
+
+RewriteOptions inherit
+
+RewriteEngine on
+RewriteRule ^/?$ "https\:\/\/tiendaag\.alephcrm\.com\/Login" [R=301,L]

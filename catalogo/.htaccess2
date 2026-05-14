@@ -1,0 +1,7 @@
+
+RewriteOptions inherit
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^catalogo\.ag\.com\.ar$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.catalogo\.ag\.com\.ar$
+RewriteRule ^/?$ "https\:\/\/tiendaag\.alephcrm\.com\/Login" [R=301,L]
