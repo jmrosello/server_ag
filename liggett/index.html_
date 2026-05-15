@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGGETT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="split left">
+        <div class="centered">
+          <img src="logo.jpg" alt="Liggett Logo">
+        </div>
+      </div>
+      
+      <div class="split right">
+        <div class="not-centered">
+          <h1>Bienvenidos</h1><br>
+          <p>
+            LIGGETT es una empresa de productos de suspensión de alta calidad, con muchos años de experiencia en ingeniería y desarrollo.
+            La calidad, la tecnología, el servicio y la profesionalidad hacen de LIGGETT un proveedor de repuestos líder en todo el mundo.<br>
+            Nuestra marca es sinónimo de conducción segura, cómoda y controlable para los propietarios de vehículos.
+          </p>
+          <br><br>
+          <p>
+            <a href="mailto:info@liggett.com.ar">info@liggett.com.ar</a>
+          </p>
+        </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+  text-decoration: none;
+}
+a:active {
+  color: darkgrey;
+  text-decoration: none;
+}
+
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+  
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: white;
+  }
+  
+  /* Control the right side */
+  .right {
+    right: 0;
+    background-color: #1a1aa0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    color: white;
+  }
+  
+  .right h1 {
+    font-size: 3em;
+  }
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .not-centered {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-15%, -50%);
+    text-align: justify;
+  }
+  
+  /* Style the image inside the centered container, if needed */
+  .centered img {
+    width: 100%;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    /* For mobile phones: */
+    .split {
+      height: 50%;
+      width: 100%;
+    }
+    .centered {
+      left: 25%;
+      transform: translate(-15%, -50%);
+    }
+    .left {
+      left: auto;
+      top: 0;
+    }
+    .right {
+      right: auto;
+      top: 50%;
+    }
+  }
