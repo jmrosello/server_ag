@@ -45,6 +45,14 @@ LOW_RISK_MOVES = [
     MoveItem("liggett/wp-content/plugins/w3-total-cache", "inactive plugin in DB"),
 ]
 
+STAGE2_MOVES = [
+    MoveItem("cobreqargentina", "site approved for quarantine"),
+    MoveItem("textarargentina", "site approved for quarantine"),
+    MoveItem("prode.old", "old protected-app copy approved for quarantine"),
+    MoveItem("catalogo", "unmapped folder approved for quarantine"),
+    MoveItem("tienda", "unmapped folder approved for quarantine"),
+]
+
 
 NEVER_MOVE = {
     ".htaccess",
@@ -59,6 +67,9 @@ NEVER_MOVE = {
     "liggett",
     "grupoag",
     "prode",
+    "ml",
+    "downloads",
+    "webmail",
 }
 
 
@@ -124,6 +135,12 @@ def main() -> int:
     parser.add_argument("--password", default=os.getenv("FTP_PASS"))
     parser.add_argument("--remote-root", default=os.getenv("FTP_REMOTE_ROOT", DEFAULT_REMOTE_ROOT))
     parser.add_argument("--quarantine", default=os.getenv("FTP_QUARANTINE"))
+    parser.add_argument(
+        "--stage",
+        choices=["low-risk", "stage2", "all"],
+        default="low-risk",
+        help="Which approved move list to use.",
+    )
     parser.add_argument("--apply", action="store_true", help="Actually move files. Omit for dry-run.")
     parser.add_argument("--insecure-tls", action="store_true", help="Disable certificate verification if the host certificate is invalid.")
     args = parser.parse_args()
@@ -136,7 +153,14 @@ def main() -> int:
     quarantine_name = clean_remote_path(args.quarantine or f"_archive_cleanup_{time.strftime('%Y%m%d_%H%M%S')}")
     dry_run = not args.apply
 
-    unsafe = [item.path for item in LOW_RISK_MOVES if item.path.strip("/") in NEVER_MOVE]
+    if args.stage == "low-risk":
+        move_items = LOW_RISK_MOVES
+    elif args.stage == "stage2":
+        move_items = STAGE2_MOVES
+    else:
+        move_items = LOW_RISK_MOVES + STAGE2_MOVES
+
+    unsafe = [item.path for item in move_items if item.path.strip("/") in NEVER_MOVE]
     if unsafe:
         print("Refusing to move protected paths: " + ", ".join(unsafe), file=sys.stderr)
         return 3
@@ -153,12 +177,15 @@ def main() -> int:
     if remote_root:
         ftp.cwd("/" + remote_root)
 
-    ensure_dir(ftp, quarantine_name, dry_run=False)
+    if dry_run:
+        print(f"DRY-RUN quarantine dir would be: /{quarantine_name}")
+    else:
+        ensure_dir(ftp, quarantine_name, dry_run=False)
 
     moved = 0
     skipped = 0
     failed = 0
-    for item in LOW_RISK_MOVES:
+    for item in move_items:
         source_rel = clean_remote_path(item.path)
         source = source_rel
         target = clean_remote_path(posixpath.join(quarantine_name, source_rel))
