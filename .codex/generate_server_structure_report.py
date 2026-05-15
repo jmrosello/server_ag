@@ -233,9 +233,10 @@ def analyze_sql_dump(path: Path, expected_prefix: str = "") -> dict[str, object]
     statement_parts: list[str] = []
 
     def handle_insert(statement: str, table: str) -> None:
-        if " VALUES " not in statement:
+        values_match = re.search(r"\bVALUES\b", statement, re.I)
+        if not values_match:
             return
-        values_sql = statement.split(" VALUES ", 1)[1].rstrip().rstrip(";")
+        values_sql = statement[values_match.end() :].rstrip().rstrip(";")
         row_count = count_insert_rows(values_sql)
         dump["tables"][table] += row_count
         dump["table_bytes"][table] += len(statement.encode("utf-8", errors="ignore"))
@@ -352,6 +353,8 @@ def scan_tree() -> tuple[
 
         for filename in filenames:
             path = current_path / filename
+            if path.resolve() == OUTPUT.resolve():
+                continue
             rel = rel_for(path)
             try:
                 st = path.stat()
@@ -539,9 +542,117 @@ def render_site_section(site: dict[str, object]) -> str:
     """
 
 
+def render_db_section(installs: list[dict[str, object]], db_analyses: dict[str, dict[str, object]], dumps: dict[str, Path]) -> str:
+    dump_rows = []
+    for name, path in sorted(dumps.items()):
+        analysis = db_analyses.get(name)
+        mapped = [str(site["domain"] or site["rel"]) for site in installs if site.get("db_name") == name]
+        dump_rows.append(
+            [
+                name,
+                rel_for(path),
+                fmt_bytes(path.stat().st_size),
+                ", ".join(mapped) or "sin wp-config mapeado",
+                len(analysis["tables"]) if analysis else "-",
+                len(analysis["woocommerce_tables"]) if analysis else "-",
+            ]
+        )
+
+    site_rows = []
+    plugin_rows = []
+    table_rows = []
+    woo_rows = []
+    for site in installs:
+        db_name = str(site.get("db_name") or "")
+        analysis = db_analyses.get(db_name)
+        if not analysis:
+            site_rows.append([site["domain"] or site["rel"], db_name or "-", "NO", "-", "-", "-", "-", "-"])
+            continue
+        options = analysis["options"]
+        active_plugins = analysis["active_plugins"]
+        active_plugin_slugs = {p.split("/", 1)[0] for p in active_plugins}
+        installed_plugins = {str(p["slug"]) for p in site["plugins"]}
+        installed_woo = any("woocommerce" in str(p["slug"]).lower() or str(p["slug"]).lower().startswith("wc-") for p in site["plugins"])
+        active_woo = any("woocommerce" in p.lower() or p.lower().startswith("wc-") for p in active_plugins)
+        prefix_candidates = analysis["table_prefix_candidates"].most_common(3)
+        prefix_label = ", ".join(f"{prefix} ({count})" for prefix, count in prefix_candidates)
+        missing_active_files = sorted(active_plugin_slugs - installed_plugins)
+
+        site_rows.append(
+            [
+                site["domain"] or site["rel"],
+                db_name,
+                "SI",
+                options.get("home") or options.get("siteurl") or "-",
+                options.get("blogname") or "-",
+                options.get("stylesheet") or options.get("template") or "-",
+                len(active_plugins),
+                "activo" if active_woo else ("solo archivos/tablas" if installed_woo or analysis["woocommerce_tables"] else "no"),
+            ]
+        )
+
+        for plugin in active_plugins:
+            plugin_rows.append([site["domain"] or site["rel"], plugin, "OK" if plugin.split("/", 1)[0] in installed_plugins else "archivo no encontrado"])
+        for missing in missing_active_files:
+            plugin_rows.append([site["domain"] or site["rel"], f"{missing}/...", "activo en DB pero carpeta no encontrada"])
+
+        for table_name, rows in analysis["tables"].most_common(25):
+            table_rows.append(
+                [
+                    site["domain"] or site["rel"],
+                    table_name,
+                    rows,
+                    fmt_bytes(analysis["table_bytes"].get(table_name, 0)),
+                ]
+            )
+
+        if installed_woo or active_woo or analysis["woocommerce_tables"] or options.get("woocommerce_db_version"):
+            woo_rows.append(
+                [
+                    site["domain"] or site["rel"],
+                    "SI" if installed_woo else "NO",
+                    "SI" if active_woo else "NO",
+                    len(analysis["woocommerce_tables"]),
+                    options.get("woocommerce_db_version") or options.get("woocommerce_version") or "-",
+                    prefix_label or "-",
+                ]
+            )
+
+    unmapped_dumps = [name for name in dumps if name not in {str(site.get("db_name") or "") for site in installs}]
+    unmapped_rows = [[name, rel_for(dumps[name]), fmt_bytes(dumps[name].stat().st_size)] for name in sorted(unmapped_dumps)]
+
+    return f"""
+    <section>
+      <h2>Bases de datos SQL</h2>
+      <p class="muted">Analisis directo de exports <code>.sql</code>, sin importar datos a MySQL. Se leen opciones WordPress, plugins activos, tablas y rastros WooCommerce.</p>
+      <h3>Dumps detectados</h3>
+      {table(['DB / dump', 'archivo', 'tamano', 'sitio mapeado', 'tablas con inserts', 'tablas WooCommerce/WC'], dump_rows)}
+      <h3>Sitios cruzados con DB</h3>
+      {table(['sitio', 'DB', 'dump encontrado', 'URL home/siteurl', 'blogname', 'tema activo', 'plugins activos', 'WooCommerce'], site_rows)}
+      <h3>Plugins activos segun DB</h3>
+      {table(['sitio', 'plugin activo', 'estado archivo'], plugin_rows)}
+      <h3>Tablas con mas filas por sitio</h3>
+      {table(['sitio', 'tabla', 'filas en INSERT', 'bytes estimados dump'], table_rows)}
+      <h3>WooCommerce: archivos vs DB</h3>
+      {table(['sitio', 'plugin instalado en archivos', 'activo en DB', 'tablas WC/WooCommerce', 'version/opcion WC', 'prefijos detectados'], woo_rows, 'No se detectaron rastros WooCommerce relevantes en DB o archivos')}
+      <h3>Dumps sin sitio WordPress mapeado</h3>
+      {table(['DB / dump', 'archivo', 'tamano'], unmapped_rows, 'Todos los dumps SQL estan mapeados a un wp-config.php')}
+    </section>
+    """
+
+
 def main() -> None:
     dirs, stats, files, ext_by_dir, errors = scan_tree()
     installs = detect_wp_installs(dirs, stats)
+    dumps = find_db_dumps()
+    db_analyses = {}
+    for site in installs:
+        db_name = str(site.get("db_name") or "")
+        if db_name and db_name in dumps and db_name not in db_analyses:
+            db_analyses[db_name] = analyze_sql_dump(dumps[db_name], str(site.get("table_prefix") or ""))
+    for db_name, path in dumps.items():
+        if db_name not in db_analyses and db_name != "information_schema":
+            db_analyses[db_name] = analyze_sql_dump(path)
     generated = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     top_dirs = sorted(
@@ -585,6 +696,7 @@ def main() -> None:
     wc_paths = wc_paths[:120]
 
     site_sections = "\n".join(render_site_section(site) for site in installs)
+    db_section = render_db_section(installs, db_analyses, dumps)
     tree_html = render_tree(dirs, files, stats)
 
     html_doc = f"""<!doctype html>
@@ -670,6 +782,8 @@ def main() -> None:
     <h2>Instalaciones WordPress</h2>
     {site_sections}
   </section>
+
+  {db_section}
 
   <section>
     <h2>Carpetas mas pesadas</h2>

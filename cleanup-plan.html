@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plan de limpieza Server AG</title>
+  <style>
+    body { margin: 0; font-family: Segoe UI, Arial, sans-serif; color: #172033; background: #f7f8fa; }
+    header { background: #111827; color: white; padding: 28px 36px; }
+    main { padding: 24px 36px 48px; }
+    section { background: white; border: 1px solid #d9dee7; border-radius: 8px; margin: 0 0 20px; padding: 20px; }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    h2 { margin: 0 0 12px; font-size: 22px; }
+    h3 { margin: 18px 0 8px; }
+    p { line-height: 1.45; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; vertical-align: top; border-bottom: 1px solid #d9dee7; padding: 8px; }
+    th { background: #f1f4f8; position: sticky; top: 0; }
+    code { background: #eef2f7; border-radius: 4px; padding: 2px 5px; }
+    .muted { color: #667085; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .summary div { border: 1px solid #d9dee7; border-radius: 6px; padding: 10px; background: #fbfcfe; }
+    .ok h2 { color: #17633a; }
+    .review h2 { color: #8a5a00; }
+    .keep h2 { color: #174ea6; }
+    ol li { margin: 0 0 8px; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Plan de limpieza Server AG</h1>
+  <p>Generado: 2026-05-15 08:47:22 · Basado en <code>AGENTS.md</code>, archivos locales, <code>server-structure-report.html</code> y dumps SQL.</p>
+</header>
+<main>
+  <section>
+    <h2>Criterio usado</h2>
+    <p>La limpieza respeta que AG, Liggett y GrupoAG se conservan; <code>prode</code> no se modifica; Cobreq y Textar se consideran sitios a remover, pero primero deben archivarse y desligarse de dominios/routing. WooCommerce no aparece activo en DB, aunque existen archivos y tablas historicas en AG.</p>
+    <div class="summary">
+      <div><b>Borrable bajo riesgo</b><br>21 items</div>
+      <div><b>Revisar antes de borrar</b><br>23 items</div>
+      <div><b>No tocar</b><br>19 items</div>
+    </div>
+  </section>
+
+  <section class="ok">
+    <h2>Borrable con bajo riesgo</h2>
+    <p class="muted">Items que no figuran como runtime activo en DB o son logs/backups/artefactos publicos innecesarios. Igual: borrar primero en copia/staging y con backup.</p>
+    <table><thead><tr><th>Ruta</th><th>Sitio</th><th>Tamano aprox.</th><th>Motivo</th><th>Accion recomendada</th></tr></thead><tbody><tr><td><code>error_log</code></td><td>raiz</td><td>94.22 MB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.index.html.swp</code></td><td>raiz</td><td>28.03 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.181215165729.orig</code></td><td>raiz</td><td>4.05 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.181215173804.orig</code></td><td>raiz</td><td>250 B</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.2</code></td><td>raiz</td><td>7.36 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.andabien</code></td><td>raiz</td><td>1.84 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.disabled</code></td><td>raiz</td><td>5.88 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>.htaccess.old</code></td><td>raiz</td><td>4.48 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>wp-config-sample.php</code></td><td>raiz</td><td>3.06 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>readme.html</code></td><td>raiz</td><td>7.33 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>license.txt</code></td><td>raiz</td><td>19.82 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>licencia.txt</code></td><td>raiz</td><td>17.83 KB</td><td>Archivo operativo, backup viejo o archivo publico innecesario para runtime.</td><td>Borrar despues de backup; conservar solo .htaccess actual y wp-config.php.</td></tr>
+<tr><td><code>wp-content/plugins/autoptimize</code></td><td>ag.com.ar</td><td>930.23 KB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/resmushit-image-optimizer</code></td><td>ag.com.ar</td><td>574.15 KB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/updraftplus</code></td><td>ag.com.ar</td><td>27.05 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/woocommerce</code></td><td>ag.com.ar</td><td>52.47 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/woocommerce-admin</code></td><td>ag.com.ar</td><td>13.00 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/yith-woocommerce-ajax-navigation</code></td><td>ag.com.ar</td><td>5.98 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>wp-content/plugins/yith-woocommerce-catalog-mode</code></td><td>ag.com.ar</td><td>3.56 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>grupoag/wp-content/plugins/post-duplicator</code></td><td>grupoag.com.ar</td><td>119.00 KB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr>
+<tr><td><code>liggett/wp-content/plugins/w3-total-cache</code></td><td>liggett.com.ar</td><td>29.97 MB</td><td>Plugin instalado pero no activo en active_plugins de la DB.</td><td>Borrar carpeta del plugin despues de backup y prueba de carga del sitio.</td></tr></tbody></table>
+  </section>
+
+  <section class="review">
+    <h2>Revisar antes de borrar</h2>
+    <p class="muted">Items que pueden contener contenido historico, assets utiles, routing, dominios, evidencia operativa o datos necesarios para migracion.</p>
+    <table><thead><tr><th>Ruta</th><th>Sitio</th><th>Tamano aprox.</th><th>Motivo</th><th>Accion recomendada</th></tr></thead><tbody><tr><td><code>liggett/wp-content/plugins/custom-post-type-ui</code></td><td>liggett.com.ar</td><td>529.22 KB</td><td>Plugin inactivo, pero puede haber definido tipos de contenido historicos.</td><td>Revisar posts/meta y exportar estructura antes de borrar.</td></tr>
+<tr><td><code>grupoag/wp-content/wflogs</code></td><td></td><td>11.41 MB</td><td>Logs, backups o cache. No son fuente de diseno, pero pueden estar ligados a plugins activos o evidencia historica.</td><td>Vaciar o archivar despues de verificar plugin, backups y formularios.</td></tr>
+<tr><td><code>liggett/wp-content/wflogs</code></td><td></td><td>11.41 MB</td><td>Logs, backups o cache. No son fuente de diseno, pero pueden estar ligados a plugins activos o evidencia historica.</td><td>Vaciar o archivar despues de verificar plugin, backups y formularios.</td></tr>
+<tr><td><code>wp-content/updraft</code></td><td></td><td>210.60 KB</td><td>Logs, backups o cache. No son fuente de diseno, pero pueden estar ligados a plugins activos o evidencia historica.</td><td>Vaciar o archivar despues de verificar plugin, backups y formularios.</td></tr>
+<tr><td><code>grupoag/wp-content/uploads/wpforms/cache</code></td><td></td><td>742.39 KB</td><td>Logs, backups o cache. No son fuente de diseno, pero pueden estar ligados a plugins activos o evidencia historica.</td><td>Vaciar o archivar despues de verificar plugin, backups y formularios.</td></tr>
+<tr><td><code>liggett/wp-content/uploads/wpforms/cache</code></td><td></td><td>284.88 KB</td><td>Logs, backups o cache. No son fuente de diseno, pero pueden estar ligados a plugins activos o evidencia historica.</td><td>Vaciar o archivar despues de verificar plugin, backups y formularios.</td></tr>
+<tr><td><code>cobreqargentina</code></td><td></td><td>267.18 MB</td><td>AGENTS.md dice que este sitio sera removido.</td><td>Archivar y retirar routing/DNS antes de borrar de produccion.</td></tr>
+<tr><td><code>textarargentina</code></td><td></td><td>268.34 MB</td><td>AGENTS.md dice que este sitio sera removido.</td><td>Archivar y retirar routing/DNS antes de borrar de produccion.</td></tr>
+<tr><td><code>ml</code></td><td></td><td>683.02 MB</td><td>Carpeta mas pesada; AGENTS.md la trata como store de assets/marketplace, no codigo.</td><td>Inventariar imagenes usadas por AG/Liggett/catalogo antes de mover o borrar.</td></tr>
+<tr><td><code>prode.old</code></td><td></td><td>280 B</td><td>Carpeta antigua junto a prode protegido.</td><td>Comparar contra prode activo y archivar si no esta ruteada.</td></tr>
+<tr><td><code>textar</code></td><td></td><td>0 B</td><td>Carpeta no mapeada como sitio activo.</td><td>Confirmar que no hay dominio/addon apuntando antes de borrar.</td></tr>
+<tr><td><code>tienda</code></td><td></td><td>0 B</td><td>Carpeta no mapeada como sitio activo.</td><td>Confirmar que no hay dominio/addon apuntando antes de borrar.</td></tr>
+<tr><td><code>catalogo</code></td><td></td><td>2.09 KB</td><td>Carpeta no mapeada como sitio activo.</td><td>Confirmar si quedo vacia o sin uso antes de borrar.</td></tr>
+<tr><td><code>downloads</code></td><td></td><td>1.59 MB</td><td>Carpeta auxiliar no mapeada.</td><td>Revisar enlaces publicos antes de borrar.</td></tr>
+<tr><td><code>webmail</code></td><td></td><td>515 B</td><td>Carpeta no mapeada; puede ser placeholder o residuo del hosting.</td><td>Confirmar con cPanel/routing antes de borrar.</td></tr>
+<tr><td><code>default.htm</code></td><td></td><td>1.00 KB</td><td>Archivo estatico viejo en raiz.</td><td>Revisar si algun link directo lo usa; si no, borrar.</td></tr>
+<tr><td><code>top.htm</code></td><td></td><td>802 B</td><td>Archivo estatico viejo en raiz.</td><td>Revisar si algun link directo lo usa; si no, borrar.</td></tr>
+<tr><td><code>stock.html</code></td><td></td><td>803 B</td><td>Archivo estatico viejo en raiz.</td><td>Revisar si algun link directo lo usa; si no, borrar.</td></tr>
+<tr><td><code>AG_Catalogo_2023.xlsx</code></td><td></td><td>1.60 MB</td><td>Documento grande en raiz publica.</td><td>Mover fuera de public_html o confirmar si debe seguir descargable.</td></tr>
+<tr><td><code>tablaaltura.pdf</code></td><td></td><td>2.03 MB</td><td>PDF en raiz publica.</td><td>Mover a assets controlados o confirmar si debe seguir descargable.</td></tr>
+<tr><td><code>dbdumps/ag_new.sql :: tablas WooCommerce/WC</code></td><td>ag.com.ar</td><td>26 tablas</td><td>WooCommerce no esta activo, pero las tablas pueden contener catalogo historico/productos.</td><td>Exportar muestra de productos/meta antes de purgar tablas en MySQL.</td></tr>
+<tr><td><code>wp-content/themes/ag/inc/woocommerce.php</code></td><td>ag.com.ar</td><td>7.44 KB</td><td>Override/hook WooCommerce dentro del theme AG; no se usa con WooCommerce inactivo, pero es parte del theme actual.</td><td>Eliminar solo en refactor o despues de verificar que ninguna plantilla lo carga.</td></tr>
+<tr><td><code>wp-content/themes/ag/woocommerce</code></td><td>ag.com.ar</td><td>294.53 KB</td><td>Override/hook WooCommerce dentro del theme AG; no se usa con WooCommerce inactivo, pero es parte del theme actual.</td><td>Eliminar solo en refactor o despues de verificar que ninguna plantilla lo carga.</td></tr></tbody></table>
+  </section>
+
+  <section class="keep">
+    <h2>No tocar</h2>
+    <p class="muted">Runtime activo, sitios protegidos, fuentes de verdad o archivos necesarios para auditar/migrar.</p>
+    <table><thead><tr><th>Ruta</th><th>Sitio</th><th>Tamano aprox.</th><th>Motivo</th><th>Accion recomendada</th></tr></thead><tbody><tr><td><code>prode/wp-content/plugins/hello.php</code></td><td>prode.ag.com.ar</td><td>2.62 KB</td><td>Prode esta protegido por AGENTS.md.</td><td>No borrar salvo pedido explicito.</td></tr>
+<tr><td><code>.htaccess</code></td><td>raiz</td><td>4.15 KB</td><td>Reglas actuales de WordPress/routing.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>.user.ini</code></td><td>raiz</td><td>602 B</td><td>Configuracion PHP local.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>php.ini</code></td><td>raiz</td><td>660 B</td><td>Configuracion PHP local.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>web.config</code></td><td>raiz</td><td>166 B</td><td>Configuracion de servidor si aplica.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>wp-config.php</code></td><td>ag.com.ar</td><td>4.46 KB</td><td>Credenciales y DB runtime.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>wp-admin</code></td><td>ag.com.ar</td><td>8.89 MB</td><td>Core WordPress activo.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>wp-includes</code></td><td>ag.com.ar</td><td>47.54 MB</td><td>Core WordPress activo.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>wp-content/themes/ag</code></td><td>ag.com.ar</td><td>3.66 MB</td><td>Theme activo y fuente visual principal.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>wp-content/uploads</code></td><td>ag.com.ar</td><td>301.09 MB</td><td>Medios y assets publicos.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>liggett</code></td><td>liggett.com.ar</td><td>390.99 MB</td><td>Sitio a conservar; limpiar solo items puntuales.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>grupoag</code></td><td>grupoag.com.ar</td><td>184.15 MB</td><td>Sitio a conservar; requiere cambios de contenido, no borrado masivo.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>prode</code></td><td>prode.ag.com.ar</td><td>180.90 MB</td><td>Protegido explicitamente por AGENTS.md.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>dbdumps/ag_new.sql</code></td><td>ag.com.ar</td><td>25.99 MB</td><td>Fuente de contenido para auditoria/migracion.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>dbdumps/ag_wp388.sql</code></td><td>liggett.com.ar</td><td>33.63 MB</td><td>Fuente de contenido para auditoria/migracion.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>dbdumps/ag_wp943.sql</code></td><td>grupoag.com.ar</td><td>40.06 MB</td><td>Fuente de contenido para auditoria/migracion.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>dbdumps/ag_wp684.sql</code></td><td>prode.ag.com.ar</td><td>6.42 MB</td><td>DB de sitio protegido.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>AGENTS.md</code></td><td>workspace</td><td>9.04 KB</td><td>Reglas de trabajo actuales.</td><td>No tocar en limpieza automatica.</td></tr>
+<tr><td><code>server-structure-report.html</code></td><td>workspace</td><td>11.97 MB</td><td>Inventario fuente de verdad actual.</td><td>No tocar en limpieza automatica.</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>Implementacion recomendada</h2>
+    <ol>
+      <li>Hacer backup completo en cPanel: archivos + todas las DB. Guardarlo fuera de <code>public_html</code>.</li>
+      <li>Crear carpeta de cuarentena, por ejemplo <code>_archive_cleanup_2026-05-15</code>, y mover alli los items de bajo riesgo en vez de borrarlos directo.</li>
+      <li>Probar carga de <code>ag.com.ar</code>, <code>liggett.com.ar</code>, <code>grupoag.com.ar</code> y <code>prode.ag.com.ar</code>.</li>
+      <li>Revisar la segunda lista: dominios/addon domains, links publicos, tablas WooCommerce, assets en <code>ml</code> y referencias Cobreq/Textar en GrupoAG.</li>
+      <li>Despues de 7 a 14 dias sin errores, borrar la cuarentena o descargarla como archivo historico.</li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>
