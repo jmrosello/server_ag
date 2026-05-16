@@ -12,18 +12,22 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "server-structure-report.html"
 DB_DUMP_DIRS = [ROOT / "dbdumps", ROOT / "db-dumps"]
 
-SKIP_DIR_NAMES = {".git", ".codex"}
+SKIP_DIR_NAMES = {".git", ".codex", "dbdumps", "db-dumps"}
+SKIP_DIR_PREFIXES = ("_archive_cleanup_",)
 
 ACTIVE_SITES = {
     ".": "ag.com.ar",
-    "cobreqargentina": "cobreargentina.com.ar",
-    "textarargentina": "textarargentina.com.ar",
     "liggett": "liggett.com.ar",
     "grupoag": "grupoag.com.ar",
     "prode": "prode.ag.com.ar",
 }
 
 EXPECTED_ACTIVE_DIRS = set(ACTIVE_SITES.keys())
+PROTECTED_ROOT_DIRS = {
+    "ml": "intocable / assets otra app",
+    "downloads": "intocable",
+    "webmail": "intocable",
+}
 
 MEDIA_EXTS = {
     ".jpg",
@@ -341,7 +345,10 @@ def scan_tree() -> tuple[
 
     for current, dirnames, filenames in os.walk(ROOT):
         current_path = Path(current)
-        dirnames[:] = sorted([d for d in dirnames if d not in SKIP_DIR_NAMES], key=str.lower)
+        dirnames[:] = sorted(
+            [d for d in dirnames if d not in SKIP_DIR_NAMES and not d.startswith(SKIP_DIR_PREFIXES)],
+            key=str.lower,
+        )
         filenames = sorted(filenames, key=str.lower)
 
         current_rel = rel_for(current_path)
@@ -670,7 +677,7 @@ def main() -> None:
 
     root_rows = []
     for d in root_children:
-        status = "activo" if d in EXPECTED_ACTIVE_DIRS else "revisar / posible muerto"
+        status = "activo" if d in EXPECTED_ACTIVE_DIRS else PROTECTED_ROOT_DIRS.get(d, "revisar / posible muerto")
         wp = "si" if any(site["rel"] == d for site in installs) else ""
         root_rows.append([d, ACTIVE_SITES.get(d, ""), status, wp, fmt_bytes(stats[d]["size"]), stats[d]["files"]])
 
